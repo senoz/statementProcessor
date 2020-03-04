@@ -40,7 +40,6 @@ class StatementProcessorControllerTest {
 	@Mock
 	CustomerStatementRepo repo;
 
-	private Response res;
 	private static Optional<CustomerStatement> ops;
 	private static CustomerStatement cs;
 
