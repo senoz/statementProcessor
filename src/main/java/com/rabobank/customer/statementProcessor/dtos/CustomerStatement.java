@@ -24,7 +24,7 @@ public class CustomerStatement {
 	private String description;
 	
 	@Column(name="END_BALANCE")
-	private double EndBalance;
+	private double endBalance;
 
 	public long getTransactionReference() {
 		return transactionReference;
@@ -67,11 +67,11 @@ public class CustomerStatement {
 	}
 
 	public double getEndBalance() {
-		return EndBalance;
+		return endBalance;
 	}
 
-	public void setEndBalance(double endBalance) {
-		EndBalance = endBalance;
+	public void setEndBalance(double balance) {
+		endBalance = balance;
 	}
 	
 	
