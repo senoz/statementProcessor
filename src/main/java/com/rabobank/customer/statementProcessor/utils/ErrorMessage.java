@@ -6,6 +6,9 @@ public class ErrorMessage {
 		this.reference = reference;
 		this.accountNumber = accountNumber;
 	}
+
+	public ErrorMessage() {
+	}
 	
 	private long reference;
 

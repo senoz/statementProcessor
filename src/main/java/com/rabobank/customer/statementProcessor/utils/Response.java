@@ -8,6 +8,14 @@ public class Response {
 	
 	private List<ErrorMessage> errorRecords;
 
+	public Response() {
+	}
+	
+	public Response(String res, List<ErrorMessage> rec) { 
+		this.result = res;
+		this.errorRecords = rec;
+	}
+
 	public String getResult() {
 		return result;
 	}

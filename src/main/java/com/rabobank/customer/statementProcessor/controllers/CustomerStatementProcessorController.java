@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rabobank.customer.statementProcessor.dtos.CustomerStatement;
 import com.rabobank.customer.statementProcessor.exceptionhandler.FormatFailureException;
+import com.rabobank.customer.statementProcessor.models.CustomerStatement;
 import com.rabobank.customer.statementProcessor.services.CustomerStatementService;
 import com.rabobank.customer.statementProcessor.utils.Response;
 

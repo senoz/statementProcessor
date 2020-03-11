@@ -1,23 +1,33 @@
 package com.rabobank.customer.statementProcessor;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.rabobank.customer.statementProcessor.controllers.CustomerStatementProcessorController;
+import com.google.gson.Gson;
+import com.rabobank.customer.statementProcessor.models.CustomerStatement;
 import com.rabobank.customer.statementProcessor.serviceImpl.CustomerStatementServiceImpl;
+import com.rabobank.customer.statementProcessor.utils.ErrorMessage;
+import com.rabobank.customer.statementProcessor.utils.Response;
+import com.rabobank.customer.statementProcessor.utils.VerificationStatus;
 
-@WebMvcTest(StatementProcessorControllerTest.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+@AutoConfigureMockMvc
 @ExtendWith(SpringExtension.class)
 class StatementProcessorControllerTest {
 
@@ -26,69 +36,60 @@ class StatementProcessorControllerTest {
 
 	@MockBean
 	CustomerStatementServiceImpl service;
-	
-	String inputData;
 
-	@DisplayName("Test for SUCCESS save transaction ")
+	Gson gson = new Gson();
+
+	@DisplayName("Test for SUCCESS save transaction API call")
 	@Test
 	public void testSaveSuccessfully() throws Exception {
-		String statement = "{\"transactionReference\": \"1262296\","
-				+ " \"accountNumber\":\"3555\","
-				+ " \"startBalance\":\"10.5\","
-				+ " \"mutation\":\"1.5\","
-				+ " \"description\":\"Test\","
-				+ " \"endBalance\":\"12.0\"}";
-		  MvcResult result = mockMvc.perform(
-				  MockMvcRequestBuilders
-				  	.post("/customer/process-statement")
-		    .contentType("application/json;charset=UTF-8")
-			.content(statement)).andReturn();
-
-		  assertEquals(HttpStatus.OK.value(), result.getResponse().getStatus());
+		CustomerStatement mockStatement = new CustomerStatement(1262296, 3555, 10.5, 1.5, "Tests", 12.0);
+		List<ErrorMessage> errMess = new ArrayList<ErrorMessage>();
+		Response mockRes = new Response(VerificationStatus.SUCCESSFUL.toString(), errMess);
+		ResponseEntity<Response> mockResponse = new ResponseEntity<>(mockRes, HttpStatus.OK);
+		Mockito.when(service.processStatement(Mockito.any(CustomerStatement.class))).thenReturn(mockResponse);
+		mockMvc.perform(MockMvcRequestBuilders.post("/customer/process-statement").content(gson.toJson(mockStatement))
+				.contentType("application/json;charset=UTF-8").accept(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isOk());
 	}
-	
-	@DisplayName("Test for Duplicate Reference in transaction ")
+
+	@DisplayName("Test for Duplicate Reference in transaction API call")
 	@Test
 	public void testDuplicateReference() throws Exception {
-		String statement = "{\"transactionReference\": \"1262296\","
-				+ " \"accountNumber\":\"3555\","
-				+ " \"startBalance\":\"10.5\","
-				+ " \"mutation\":\"1.5\","
-				+ " \"description\":\"Test\","
-				+ " \"endBalance\":\"12.0\"}";
-		  MvcResult result = mockMvc.perform(
-				  MockMvcRequestBuilders
-				  	.post("/customer/process-statement")
-		    .contentType("application/json;charset=UTF-8")
-			.content(statement)).andReturn();
+		CustomerStatement mockStatement = new CustomerStatement(1262296, 3555, 10.5, 1.5, "Tests", 12.0);
+		List<ErrorMessage> errMess = new ArrayList<ErrorMessage>();
+		Response mockRes = new Response(VerificationStatus.DUPLICATE_REFERENCE.toString(), errMess);
+		ResponseEntity<Response> mockResponse = new ResponseEntity<>(mockRes, HttpStatus.OK);
+		Mockito.when(service.processStatement(Mockito.any(CustomerStatement.class))).thenReturn(mockResponse);
 
-		  assertEquals(HttpStatus.OK.value(), result.getResponse().getStatus());
+		mockMvc.perform(MockMvcRequestBuilders.post("/customer/process-statement").content(gson.toJson(mockStatement))
+				.contentType("application/json;charset=UTF-8").accept(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isOk());
 	}
-//
-//	@Test
-//	public void testIncorrectEndBalance() throws Exception {
-//		CustomerStatementServiceImpl service = new CustomerStatementServiceImpl();
-//		Response responseEntity = service.processStatement(cs).getBody();
-//		cs.setMutation(101);
-//		assertThat(responseEntity.getResult())
-//				.isEqualTo(VerificationStatus.INCORRECT_END_BALANCE.toString());
-//	}
-//
-//	@Test
-//	public void testDuplicateRefWithIncorrectEndBalance() throws Exception {
-//		CustomerStatementServiceImpl service = new CustomerStatementServiceImpl();
-//		Response responseEntity = service.processStatement(cs).getBody();
-//		cs.setMutation(101);
-//		assertThat(responseEntity.getResult())
-//				.isEqualTo(VerificationStatus.DUPLICATE_REFERENCE_INCORRECT_END_BALANCE.toString());
-//	}
-//
-//	@Test
-//	public void testSuccessData() throws Exception {
-//		CustomerStatementServiceImpl service = new CustomerStatementServiceImpl();
-//		Response responseEntity = service.processStatement(cs).getBody();
-//		cs.setMutation(50);
-//		assertThat(responseEntity.getResult()).isEqualTo(VerificationStatus.SUCCESSFUL.toString());
-//	}
+
+	@DisplayName("Test for Incorrect end balance transaction API call")
+	@Test
+	public void testIncorrectEndBalance() throws Exception {
+		CustomerStatement mockStatement = new CustomerStatement(1262, 3555, 1.5, 1.5, "Tests", 12.0);
+		List<ErrorMessage> errMess = new ArrayList<ErrorMessage>();
+		Response mockRes = new Response(VerificationStatus.INCORRECT_END_BALANCE.toString(), errMess);
+		ResponseEntity<Response> mockResponse = new ResponseEntity<>(mockRes, HttpStatus.OK);
+		Mockito.when(service.processStatement(Mockito.any(CustomerStatement.class))).thenReturn(mockResponse);
+		mockMvc.perform(MockMvcRequestBuilders.post("/customer/process-statement").content(gson.toJson(mockStatement))
+				.contentType("application/json;charset=UTF-8").accept(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isOk());
+	}
+
+	@DisplayName("Test for Duplicate Reference & Incorrect end balance transaction API call")
+	@Test
+	public void testDuplicateReferenceWithIncorrectEndBalance() throws Exception {
+		CustomerStatement mockStatement = new CustomerStatement(1262296, 3555, 1.5, 1.5, "Tests", 12.0);
+		List<ErrorMessage> errMess = new ArrayList<ErrorMessage>();
+		Response mockRes = new Response(VerificationStatus.INCORRECT_END_BALANCE.toString(), errMess);
+		ResponseEntity<Response> mockResponse = new ResponseEntity<>(mockRes, HttpStatus.OK);
+		Mockito.when(service.processStatement(Mockito.any(CustomerStatement.class))).thenReturn(mockResponse);
+		mockMvc.perform(MockMvcRequestBuilders.post("/customer/process-statement").content(gson.toJson(mockStatement))
+				.contentType("application/json;charset=UTF-8").accept(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isOk());
+	}
 
 }

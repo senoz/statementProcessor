@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.rabobank.customer.statementProcessor.dtos.CustomerStatement;
+import com.rabobank.customer.statementProcessor.models.CustomerStatement;
 import com.rabobank.customer.statementProcessor.utils.ErrorMessage;
 import com.rabobank.customer.statementProcessor.utils.Response;
 

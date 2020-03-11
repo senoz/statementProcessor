@@ -1,4 +1,4 @@
-package com.rabobank.customer.statementProcessor.dtos;
+package com.rabobank.customer.statementProcessor.models;
 
 public class CustomerStatement {
 	
@@ -13,6 +13,15 @@ public class CustomerStatement {
 	private String description;
 	
 	private double endBalance;
+
+	public CustomerStatement(long tranRef, long accNo, double startBal, double mut, String desc, double endBal ) {
+		this.transactionReference = tranRef;
+		this.accountNumber = accNo;
+		this.startBalance = startBal;
+		this.mutation = mut;
+		this.description = desc;
+		this.endBalance = endBal;
+	}
 
 	public long getTransactionReference() {
 		return transactionReference;
