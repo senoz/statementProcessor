@@ -1,29 +1,17 @@
 package com.rabobank.customer.statementProcessor.dtos;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-@Entity(name="CUSTOMER_STATEMENT")
 public class CustomerStatement {
 	
-	@Id
-	@Column(name="TRANSACTION_REFERENCE")
 	private long transactionReference;
 	
-	@Column(name="ACCOUNT_NUMBER")
 	private long accountNumber;
 	
-	@Column(name="START_BALANCE")
 	private double startBalance;
 	
-	@Column(name="MUTATION")
 	private double mutation;
 	
-	@Column(name="DESCRIPTION")
 	private String description;
 	
-	@Column(name="END_BALANCE")
 	private double endBalance;
 
 	public long getTransactionReference() {
@@ -73,7 +61,5 @@ public class CustomerStatement {
 	public void setEndBalance(double balance) {
 		endBalance = balance;
 	}
-	
-	
 
 }
