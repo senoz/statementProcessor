@@ -1,5 +1,6 @@
 package com.rabobank.customer.statementProcessor;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -84,5 +85,29 @@ public class StatementProcessorServicesTest {
 	public void testSaveStatements() throws Exception {
 		CustomerStatement mockStatement = new CustomerStatement(1262296, 3555, 10.5, 1.5, "Tests", 12.0);
 		Mockito.doThrow(new Exception()).doNothing().when(service).saveStatements(mockStatement);
+	}
+	
+	@DisplayName("Test for Duplicate Reference Message")
+	@Test
+	public void testDuplicateReferenceMessage() throws Exception {
+		assertEquals(VerificationStatus.DUPLICATE_REFERENCE.toString(), service.getDuplicateReferenceMessage());
+	}
+	
+	@DisplayName("Test for Success Message")
+	@Test
+	public void testSussessMessgae() throws Exception {
+		assertEquals(VerificationStatus.SUCCESSFUL.toString(), service.getSussessMessgae());
+	}
+	
+	@DisplayName("Test for Incorrect End Balance Message")
+	@Test
+	public void testIncorrectEndBalanceMessage() throws Exception {
+		assertEquals(VerificationStatus.INCORRECT_END_BALANCE.toString(), service.getIncorrectEndBalanceMessage());
+	}
+	
+	@DisplayName("Test for Duplicate Reference with incorrect Endbalance Message")
+	@Test
+	public void testDuplicateReferenceWithInCorrectBalMessage() throws Exception {
+		assertEquals(VerificationStatus.DUPLICATE_REFERENCE_INCORRECT_END_BALANCE.toString(), service.getDuplicateReferenceWithInCorrectBalMessage());
 	}
 }

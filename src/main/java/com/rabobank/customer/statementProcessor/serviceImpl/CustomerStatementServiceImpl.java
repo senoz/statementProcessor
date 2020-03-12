@@ -34,19 +34,19 @@ public class CustomerStatementServiceImpl implements CustomerStatementService {
 			if (checkEndBalance(cs.getStartBalance(), cs.getMutation(), cs.getEndBalance())) {
 				isIncorrectBalance = true;
 				errors.add(new ErrorMessage(cs.getTransactionReference(), cs.getAccountNumber()));
-				setResponseData(VerificationStatus.INCORRECT_END_BALANCE.toString(), errors);
+				setResponseData(this.getIncorrectEndBalanceMessage(), errors);
 			}
 			if (isTransactionReferenceExists(cs.getTransactionReference())) {
 				isDuplicate = true;
 				errors.add(new ErrorMessage(cs.getTransactionReference(), cs.getAccountNumber()));
-				setResponseData(VerificationStatus.DUPLICATE_REFERENCE.toString(), errors);
+				setResponseData(this.getDuplicateReferenceMessage(), errors);
 			}
 			if (isDuplicate && isIncorrectBalance) {
-				setResponseData(VerificationStatus.DUPLICATE_REFERENCE_INCORRECT_END_BALANCE.toString(), errors);
+				setResponseData(this.getDuplicateReferenceWithInCorrectBalMessage(), errors);
 			}
 			if (!isDuplicate && !isIncorrectBalance) {
 				saveStatements(cs);
-				setResponseData(VerificationStatus.SUCCESSFUL.toString(), errors);
+				setResponseData(this.getSussessMessgae(), errors);
 			}
 		} catch (Exception ex) {
 			throw new Exception();
@@ -83,5 +83,25 @@ public class CustomerStatementServiceImpl implements CustomerStatementService {
 			returnData = true;
 		}
 		return returnData;
+	}
+	
+	@Override
+	public String getIncorrectEndBalanceMessage() throws Exception {
+		return VerificationStatus.INCORRECT_END_BALANCE.toString();
+	}
+	
+	@Override
+	public String getSussessMessgae() throws Exception {
+		return VerificationStatus.SUCCESSFUL.toString();
+	}
+	
+	@Override
+	public String getDuplicateReferenceMessage() throws Exception {
+		return VerificationStatus.DUPLICATE_REFERENCE.toString();
+	}
+	
+	@Override
+	public String getDuplicateReferenceWithInCorrectBalMessage() throws Exception {
+		return VerificationStatus.DUPLICATE_REFERENCE_INCORRECT_END_BALANCE.toString();
 	}
 }

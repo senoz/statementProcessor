@@ -17,5 +17,8 @@ public interface CustomerStatementService {
 	public void saveStatements(CustomerStatement statement) throws Exception;
 	public boolean isTransactionReferenceExists(long transRef) throws Exception;
 	public boolean checkEndBalance(double startBalance, double mutation, double endBalance) throws Exception;
-	
+	public String getIncorrectEndBalanceMessage() throws Exception;
+	public String getSussessMessgae() throws Exception;
+	public String getDuplicateReferenceMessage() throws Exception;
+	public String getDuplicateReferenceWithInCorrectBalMessage() throws Exception;
 }
