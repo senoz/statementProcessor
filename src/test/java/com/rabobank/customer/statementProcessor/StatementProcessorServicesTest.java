@@ -26,7 +26,7 @@ public class StatementProcessorServicesTest {
 	@Autowired
 	CustomerStatementServiceImpl service;
 
-	@DisplayName("Test for Process statement method service as SUCCESSFUL")
+	@DisplayName("Test for Process statement method service Response as SUCCESSFUL")
 	@Test
 	public void testProcessStatement1() throws Exception {
 		CustomerStatement mockStatement = new CustomerStatement(1262296, 3555, 10.5, 1.5, "Tests", 12.0);
@@ -34,7 +34,7 @@ public class StatementProcessorServicesTest {
 		assertEquals(VerificationStatus.SUCCESSFUL.toString(), result.getResult());
 	}
 
-	@DisplayName("Test for Process statement method service as DUPLICATE_REFERENCE")
+	@DisplayName("Test for Process statement method service Response as DUPLICATE_REFERENCE")
 	@Test
 	public void testProcessStatement2() throws Exception {
 		CustomerStatement mockStatement = new CustomerStatement(1262296, 3555, 10.5, 1.5, "Tests", 12.0);
@@ -42,7 +42,7 @@ public class StatementProcessorServicesTest {
 		assertEquals(VerificationStatus.DUPLICATE_REFERENCE.toString(), result.getResult());
 	}
 
-	@DisplayName("Test for Process statement method service as INCORRECT_END_BALANCE")
+	@DisplayName("Test for Process statement method service Response as INCORRECT_END_BALANCE")
 	@Test
 	public void testProcessStatement3() throws Exception {
 		CustomerStatement mockStatement = new CustomerStatement(111111, 3555, 10.5, 1.5, "Tests", 120.0);
@@ -50,7 +50,7 @@ public class StatementProcessorServicesTest {
 		assertEquals(VerificationStatus.INCORRECT_END_BALANCE.toString(), result.getResult());
 	}
 
-	@DisplayName("Test for Process statement method service as DUPLICATE_REFERENCE_INCORRECT_END_BALANCE")
+	@DisplayName("Test for Process statement method service Response as DUPLICATE_REFERENCE_INCORRECT_END_BALANCE")
 	@Test
 	public void testProcessStatement4() throws Exception {
 		CustomerStatement mockStatement = new CustomerStatement(1262296, 3555, 10.5, 1.5, "Tests", 120.0);
