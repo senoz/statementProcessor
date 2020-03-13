@@ -1,8 +1,8 @@
 package com.rabobank.customer.statementProcessor.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,13 +22,13 @@ public class CustomerStatementProcessorController {
 	
 	@RequestMapping(value = "/process-statement", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<Response> processStatement(@RequestBody CustomerStatement customerStatement) throws Exception {
-		ResponseEntity<Response> res;
+		Response res;
 		try {
 			res = cutomerService.processStatement(customerStatement);
 		} catch (Exception ex) {
 			throw new FormatFailureException();
 		}
-		return res;
+		return new ResponseEntity<Response>(res, HttpStatus.OK);
 	}
 
 }

@@ -20,8 +20,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.google.gson.Gson;
+import com.rabobank.customer.statementProcessor.controllers.CustomerStatementProcessorController;
 import com.rabobank.customer.statementProcessor.models.CustomerStatement;
-import com.rabobank.customer.statementProcessor.serviceImpl.CustomerStatementServiceImpl;
 import com.rabobank.customer.statementProcessor.utils.ErrorMessage;
 import com.rabobank.customer.statementProcessor.utils.Response;
 import com.rabobank.customer.statementProcessor.utils.VerificationStatus;
@@ -35,7 +35,7 @@ class StatementProcessorControllerTest {
 	private MockMvc mockMvc;
 
 	@MockBean
-	CustomerStatementServiceImpl service;
+	CustomerStatementProcessorController controller;
 
 	Gson gson = new Gson();
 
@@ -46,7 +46,7 @@ class StatementProcessorControllerTest {
 		List<ErrorMessage> errMess = new ArrayList<ErrorMessage>();
 		Response mockRes = new Response(VerificationStatus.SUCCESSFUL.toString(), errMess);
 		ResponseEntity<Response> mockResponse = new ResponseEntity<>(mockRes, HttpStatus.OK);
-		Mockito.when(service.processStatement(Mockito.any(CustomerStatement.class))).thenReturn(mockResponse);
+		Mockito.when(controller.processStatement(Mockito.any(CustomerStatement.class))).thenReturn(mockResponse);
 		mockMvc.perform(MockMvcRequestBuilders.post("/customer/process-statement").content(gson.toJson(mockStatement))
 				.contentType("application/json;charset=UTF-8").accept(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().isOk());
@@ -59,7 +59,7 @@ class StatementProcessorControllerTest {
 		List<ErrorMessage> errMess = new ArrayList<ErrorMessage>();
 		Response mockRes = new Response(VerificationStatus.DUPLICATE_REFERENCE.toString(), errMess);
 		ResponseEntity<Response> mockResponse = new ResponseEntity<>(mockRes, HttpStatus.OK);
-		Mockito.when(service.processStatement(Mockito.any(CustomerStatement.class))).thenReturn(mockResponse);
+		Mockito.when(controller.processStatement(Mockito.any(CustomerStatement.class))).thenReturn(mockResponse);
 
 		mockMvc.perform(MockMvcRequestBuilders.post("/customer/process-statement").content(gson.toJson(mockStatement))
 				.contentType("application/json;charset=UTF-8").accept(MediaType.APPLICATION_JSON))
@@ -73,7 +73,7 @@ class StatementProcessorControllerTest {
 		List<ErrorMessage> errMess = new ArrayList<ErrorMessage>();
 		Response mockRes = new Response(VerificationStatus.INCORRECT_END_BALANCE.toString(), errMess);
 		ResponseEntity<Response> mockResponse = new ResponseEntity<>(mockRes, HttpStatus.OK);
-		Mockito.when(service.processStatement(Mockito.any(CustomerStatement.class))).thenReturn(mockResponse);
+		Mockito.when(controller.processStatement(Mockito.any(CustomerStatement.class))).thenReturn(mockResponse);
 		mockMvc.perform(MockMvcRequestBuilders.post("/customer/process-statement").content(gson.toJson(mockStatement))
 				.contentType("application/json;charset=UTF-8").accept(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().isOk());
@@ -86,7 +86,7 @@ class StatementProcessorControllerTest {
 		List<ErrorMessage> errMess = new ArrayList<ErrorMessage>();
 		Response mockRes = new Response(VerificationStatus.INCORRECT_END_BALANCE.toString(), errMess);
 		ResponseEntity<Response> mockResponse = new ResponseEntity<>(mockRes, HttpStatus.OK);
-		Mockito.when(service.processStatement(Mockito.any(CustomerStatement.class))).thenReturn(mockResponse);
+		Mockito.when(controller.processStatement(Mockito.any(CustomerStatement.class))).thenReturn(mockResponse);
 		mockMvc.perform(MockMvcRequestBuilders.post("/customer/process-statement").content(gson.toJson(mockStatement))
 				.contentType("application/json;charset=UTF-8").accept(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().isOk());
