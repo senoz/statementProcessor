@@ -1,5 +1,7 @@
 package com.rabobank.customer.statementProcessor.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,8 @@ import com.rabobank.customer.statementProcessor.utils.Response;
 @RequestMapping("/customer")
 public class CustomerStatementProcessorController {
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(CustomerStatementProcessorController.class);
+	
 	@Autowired
 	private CustomerStatementService cutomerService;
 	
@@ -26,8 +30,10 @@ public class CustomerStatementProcessorController {
 		try {
 			res = cutomerService.processStatement(customerStatement);
 		} catch (Exception ex) {
+			LOGGER.error("Process statement controller error" + ex.getMessage());
 			throw new FormatFailureException();
 		}
+		LOGGER.info("Processing the customer statement ");
 		return new ResponseEntity<Response>(res, HttpStatus.OK);
 	}
 
