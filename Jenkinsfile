@@ -5,6 +5,9 @@ pipeline {
     dockerImage = ''
   }
   agent any
+  tools {
+        maven 'Maven_3.5.2' 
+  }
   stages {
     stage('Cloning Git') {
       steps {
@@ -12,26 +15,20 @@ pipeline {
       }
     }
     stage('Compile Stage') {
+          steps {
+                bat'mvn clean compile'
+          }
+     }
+     stage('Testing Stage') {
         steps {
-                withMaven(maven : 'apache-maven-3.6.1') {
-                    bat'mvn clean compile'
-                }
-            }
+                bat'mvn test'
         }
-        stage('Testing Stage') {
-            steps {
-                withMaven(maven : 'apache-maven-3.6.1') {
-                    bat'mvn test'
-                }
-            }
-        }
-        stage('Install Stage') {
-            steps {
-                withMaven(maven : 'apache-maven-3.6.1') {
-                    bat'mvn install'
-                }
-            }
-        }
+     }
+     stage('Install Stage') {
+          steps {
+                  bat'mvn install'
+          }
+     }
     /*
     stage('Building image') {
       steps{
