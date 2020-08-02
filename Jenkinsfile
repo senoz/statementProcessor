@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    registry = "interviewdot/FirstTry"
+    registry = "shenoz/myrepo"
     registryCredential = 'docker-hub-credentials'
     dockerImage = ''
   }
