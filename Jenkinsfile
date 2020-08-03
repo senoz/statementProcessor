@@ -1,9 +1,9 @@
 pipeline {
-  environment {
+  /* environment {
     registry = "shenoz/myrepo"
     registryCredential = 'docker-hub-credentials'
     dockerImage = ''
-  }
+  }*/
   agent any
   stages {
     stage('Cloning Git') {
@@ -12,8 +12,9 @@ pipeline {
       }
     }
     stage('Compile - Install Stage') {
-      steps {
+      
         def mvnHome = tool name: 'maven', type: 'maven'
+      steps {
         sh "${mvnnHome}/bin/mvn package"
       }
     }
