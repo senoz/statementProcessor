@@ -9,6 +9,9 @@ pipeline {
     PATH = "C:\\WINDOWS\\SYSTEM32"
 
 }
+  tools {
+    maven 'maven'
+  }
   agent any
   stages {
     stage('Cloning Git') {
