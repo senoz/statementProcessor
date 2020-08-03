@@ -15,7 +15,7 @@ pipeline {
       
         // def mvnHome = tool name: 'maven', type: 'maven'
       steps {
-        sh "mvn package"
+        bat "mvn install"
       }
     }
     /*
