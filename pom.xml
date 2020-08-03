@@ -17,7 +17,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<junit-jupiter.version>5.4.0</junit-jupiter.version>
+<!-- 		<junit-jupiter.version>5.4.0</junit-jupiter.version> -->
 	</properties>
 
 	<dependencies>
@@ -33,12 +33,12 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
-		<dependency>
+<!-- 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-<!-- 			<scope>test</scope> -->
+			<scope>test</scope>
 
-			<!-- exclude junit 4 -->
+			
 
 			   <exclusions>
             <exclusion>
@@ -48,29 +48,29 @@
         </exclusions>
 		</dependency>
 
-		<!-- Junit 5 -->
+	
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
-<!-- 			<scope>test</scope> -->
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
-<!-- 			<scope>test</scope> -->
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.platform</groupId>
 			<artifactId>junit-platform-launcher</artifactId>
-<!-- 			<scope>test</scope> -->
+			<scope>test</scope>
 		</dependency>
 
-		<!-- Mockito extention -->
+		
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-junit-jupiter</artifactId>
-<!-- 			<scope>test</scope> -->
-		</dependency>
+			<scope>test</scope>
+		</dependency> -->
 	</dependencies>
 
 	<build>
