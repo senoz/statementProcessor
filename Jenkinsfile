@@ -4,6 +4,11 @@ pipeline {
     registryCredential = 'docker-hub-credentials'
     dockerImage = ''
   }*/
+  environment {
+
+    PATH = "C:\\WINDOWS\\SYSTEM32"
+
+}
   agent any
   stages {
     stage('Cloning Git') {
