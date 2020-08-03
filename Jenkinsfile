@@ -12,8 +12,10 @@ pipeline {
       }
     }
     stage('Compile - Install Stage') {
-      def mvnHome = tool name: 'maven', type: 'maven'
-      sh "${mvnnHome}/bin/mvn package"
+      steps {
+        def mvnHome = tool name: 'maven', type: 'maven'
+        sh "${mvnnHome}/bin/mvn package"
+      }
     }
     /*
     stage('Building image') {
