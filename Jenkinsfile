@@ -19,6 +19,13 @@ pipeline {
         git 'https://github.com/senoz/statementProcessor.git'
       }
     }
+    stage('Compile - Clean Stage') {
+      
+        // def mvnHome = tool name: 'maven', type: 'maven'
+      steps {
+        bat "mvn clean"
+      }
+    }
     stage('Compile - Install Stage') {
       
         // def mvnHome = tool name: 'maven', type: 'maven'
