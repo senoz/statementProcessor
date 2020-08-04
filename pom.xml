@@ -17,8 +17,6 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<maven.compiler.source>1.8</maven.compiler.source>
- 		<maven.compiler.target>1.8</maven.compiler.target>
 		<junit-jupiter.version>5.4.0</junit-jupiter.version>
 	</properties>
 
@@ -54,17 +52,17 @@
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
-			<scope>test</scope>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
-			<scope>test</scope>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.platform</groupId>
 			<artifactId>junit-platform-launcher</artifactId>
-			<scope>test</scope>
+			<scope>compile</scope>
 		</dependency>
 
 		
