@@ -8,7 +8,7 @@ pipeline {
     registry = "shenoz/myrepo"
     registryCredential = 'docker-hub-credentials'
     dockerImage = ''
-    PATH = "C:\\WINDOWS\\SYSTEM32"
+   // PATH = "C:\\WINDOWS\\SYSTEM32"
 
 }
   tools {
