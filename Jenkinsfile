@@ -5,7 +5,9 @@ pipeline {
     dockerImage = ''
   }*/
   environment {
-
+    registry = "shenoz/myrepo"
+    registryCredential = 'docker-hub-credentials'
+    dockerImage = ''
     PATH = "C:\\WINDOWS\\SYSTEM32"
 
 }
@@ -33,7 +35,7 @@ pipeline {
         bat "mvn install"
       }
     }
-    /*
+
     stage('Building image') {
       steps{
         script {
@@ -55,6 +57,7 @@ pipeline {
         }
       }
     }
+        /*
     stage('Deploy to K8S'){
         steps{
             sh 'kubectl apply -f deployment.yml'
